@@ -1,0 +1,51 @@
+
+name: Terraform Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_ROLE_SESSION_NAME: GitHubActions
+  TF_STATE_BUCKET: ${{ secrets.TF_STATE_BUCKET }}
+
+jobs:
+  deployment:
+    name: Deployment
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      packages: write
+      deployments: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          audience: sts.amazonaws.com
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-session-name: ${{ env.AWS_ROLE_SESSION_NAME }}
+          role-duration-seconds: 300
+          output-credentials: true
+      - name: Terraform Configure
+        run: |
+          echo 'state_bucket="${{ env.TF_STATE_BUCKET }}"' >> generated.auto.tfvars
+          echo 'gh_repo_id="${{ github.repository_id }}"' >> generated.auto.tfvars
+          echo 'gh_repo_name="${{ github.repository }}"' >> generated.auto.tfvars
+      - name: Terraform Initialize
+        run: > 
+          terraform init
+          -backend-config="bucket=${{ env.TF_STATE_BUCKET }}"
+          -backend-config="key=terraform/state/${{ github.repository_id }}"
+          -backend-config="region=${{ env.AWS_REGION }}"
+      - name: Terraform Plan
+        run: terraform plan -out=${{ github.sha }}.tfplan
+      - name: Terraform Apply
+        run: terraform apply -auto-approve ${{ github.sha }}.tfplan

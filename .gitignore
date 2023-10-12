@@ -1,0 +1,12 @@
+# Generated files
+generated.auto.tfvars
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+*.hcl
+
+# VSCode
+.vscode/
