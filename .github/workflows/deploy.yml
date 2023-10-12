@@ -32,7 +32,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           role-session-name: ${{ env.AWS_ROLE_SESSION_NAME }}
-          role-duration-seconds: 300
+          role-duration-seconds: 900
           output-credentials: true
       - name: Terraform Configure
         run: |
