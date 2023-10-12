@@ -22,13 +22,13 @@ data "aws_iam_policy_document" "policiy_teste" {
 }
 
 resource "aws_iam_role" "iamsr_teste" {
-  path = "/iamsr"
+  path = "/iamsr/"
   name = "teste"
   assume_role_policy = data.aws_iam_policy_document.assume_role_teste.json
 }
 
 resource "aws_iam_policy" "iamsr_teste" {
-  path = "/iamsr"
+  path = "/iamsr/"
   name = "teste"
   policy = data.aws_iam_policy_document.policiy_teste.json
 }
