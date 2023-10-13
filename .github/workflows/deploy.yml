@@ -35,6 +35,10 @@ jobs:
           role-duration-seconds: 900
           mask-aws-account-id: true
           output-credentials: true
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
       - name: Terraform Configure
         run: |
           echo 'state_bucket="${{ env.TF_STATE_BUCKET }}"' >> generated.auto.tfvars
