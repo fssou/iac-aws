@@ -13,6 +13,7 @@ data "aws_iam_policy_document" "iac_state_bucket" {
       "s3:ListBucket",
       "s3:GetBucketTagging",
       "s3:ListBucketVersions",
+      "s3:DeleteObject",
     ]
     effect = "Allow"
     resources = [
