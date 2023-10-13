@@ -21,6 +21,13 @@ data "aws_iam_policy_document" "iac_assume_role" {
         ]
     }
     condition {
+        test     = "StringLike"
+        variable = "token.actions.githubusercontent.com:sub"
+        values   = [
+            "repo:${ var.gh_repo_owner }/*"
+        ]
+    }
+    condition {
         test     = "StringEquals"
         variable = "token.actions.githubusercontent.com:repository_owner"
         values   = [
