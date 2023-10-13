@@ -11,7 +11,8 @@ data "aws_iam_policy_document" "iac_state_bucket" {
   statement {
     actions = [
       "s3:ListBucket",
-      "s3:GetBucketTagging"
+      "s3:GetBucketTagging",
+      "s3:ListBucketVersions",
     ]
     effect = "Allow"
     resources = [
@@ -26,7 +27,7 @@ data "aws_iam_policy_document" "iac_state_bucket" {
       "s3:PutObject",
       "s3:GetObjectTagging",
       "s3:DeleteObjectTagging",
-      "s3:PutObjectTagging"
+      "s3:PutObjectTagging",
     ]
     effect = "Allow"
     resources = [
