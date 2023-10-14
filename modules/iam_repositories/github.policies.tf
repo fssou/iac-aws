@@ -6,8 +6,7 @@ resource "aws_iam_policy" "iac_state_bucket" {
 }
 
 data "aws_iam_policy_document" "iac_state_bucket" {
-  version   = "2012-10-17"
-  policy_id = "iac-state-bucket"
+  version = "2012-10-17"
   statement {
     actions = [
       "s3:ListBucket",
