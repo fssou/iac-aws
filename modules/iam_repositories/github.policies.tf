@@ -17,7 +17,7 @@ data "aws_iam_policy_document" "iac_state_bucket" {
     ]
     effect = "Allow"
     resources = [
-      "arn:aws:s3:::${var.state_bucket}"
+      "arn:aws:s3:::${var.bucket_name_state}"
     ]
   }
   statement {
@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "iac_state_bucket" {
     ]
     effect = "Allow"
     resources = [
-      "arn:aws:s3:::${var.state_bucket}/*"
+      "arn:aws:s3:::${var.bucket_name_state}/*"
     ]
   }
 }

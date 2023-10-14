@@ -3,7 +3,7 @@ locals {
   gh_repo_id    = 704373873
   gh_repo_owner = "fssou"
   gh_repo_name  = "iac-aws-datamesh"
-  state_bucket  = "iac.francl.in"
+  bucket_name_state  = var.bucket_name_state
 }
 
 resource "aws_iam_role" "iac_datamesh" {
@@ -21,11 +21,10 @@ resource "aws_iam_role_policy_attachment" "iac_datamesh_bucket_state" {
 }
 
 module "policy_document_iac_datamesh" {
-  source        = "./modules/common_iam"
+  source        = "./modules/iam_commons"
   gh_repo_id    = local.gh_repo_id
   gh_repo_owner = local.gh_repo_owner
 }
-
 
 resource "aws_iam_policy" "iac_datamesh" {
   path   = "/github/"
