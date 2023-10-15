@@ -30,7 +30,6 @@ module "policy_document_iac_datamesh" {
 resource "aws_iam_policy" "iac_datamesh" {
   path   = "/github/"
   name   = "repo-${local.gh_repo_id}"
-  id     = "Repo${local.gh_repo_id}"
   description = "Politicas para criacao de recursos do repositorio ${local.gh_repo_owner}/${local.gh_repo_name}"
   policy = data.aws_iam_policy_document.iac_datamesh.json
 }
