@@ -56,6 +56,7 @@ data "aws_iam_policy_document" "iac_datamesh" {
       "s3:PutLifecycleConfiguration",
       "s3:PutEncryptionConfiguration",
       "s3:PutBucketVersioning",
+      "s3:PutBucketPolicy",
     ]
     effect = "Allow"
     resources = [
