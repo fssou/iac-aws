@@ -49,6 +49,7 @@ data "aws_iam_policy_document" "iac_datamesh" {
       "s3:DeleteBucket",
       "s3:DeleteBucketPolicy",
       "s3:GetBucketAcl",
+      "s3:GetBucketCORS",
       "s3:GetBucketLocation",
       "s3:GetBucketOwnershipControls",
       "s3:GetBucketPolicy",
