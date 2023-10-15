@@ -67,6 +67,7 @@ data "aws_iam_policy_document" "iac_datamesh" {
       "s3:PutAccessPointPublicAccessBlock",
       "s3:PutAccountPublicAccessBlock",
       "s3:PutBucketAcl",
+      "s3:PutBucketCORS",
       "s3:PutBucketOwnershipControls",
       "s3:PutBucketPolicy",
       "s3:PutBucketPublicAccessBlock",
