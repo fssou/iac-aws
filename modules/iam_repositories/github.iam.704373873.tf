@@ -37,8 +37,29 @@ data "aws_iam_policy_document" "iac_datamesh" {
   version   = "2012-10-17"
   policy_id = "repo-${local.gh_repo_id}"
   statement {
+    sid = "S3IacDatamesh"
     actions = [
-      "s3:*"
+      "s3:Get*",
+      "s3:List*",
+      "s3:CreateBucket",
+      "s3:DeleteBucket",
+      "s3:DeleteBucketPolicy",
+      "s3:PutBucketTagging",
+      "s3:PutBucketAcl",
+      "s3:PutBucketPublicAccessBlock",
+      "s3:PutLifecycleConfiguration",
+      "s3:PutEncryptionConfiguration",
+      "s3:PutBucketVersioning",
+    ]
+    effect = "Allow"
+    resources = [
+      "*"
+    ]
+  }
+  statement {
+    sid = "GlueIacDatamesh"
+    actions = [
+      "glue:*"
     ]
     effect = "Allow"
     resources = [
