@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "iac_assume_role" {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
       values = [
-        "repo:${ var.gh_repo_owner }/${ var.gh_repo_name }:*"
+        "repo:${var.gh_repo_owner}/${var.gh_repo_name}:*"
       ]
     }
   }
