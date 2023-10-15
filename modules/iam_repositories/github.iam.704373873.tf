@@ -20,6 +20,11 @@ resource "aws_iam_role_policy_attachment" "iac_datamesh_bucket_state" {
   policy_arn = aws_iam_policy.iac_state_bucket.arn
 }
 
+resource "aws_iam_role_policy_attachment" "iac_datamesh" {
+  role       = aws_iam_role.iac_datamesh.name
+  policy_arn = aws_iam_policy.iac_datamesh.arn
+}
+
 module "policy_document_iac_datamesh" {
   source        = "./modules/iam_commons"
   gh_repo_id    = local.gh_repo_id
