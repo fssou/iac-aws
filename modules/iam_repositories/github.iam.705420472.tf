@@ -1,48 +1,64 @@
 
 locals {
-  gh_repo_id_iac_datamesh        = 704373873
-  gh_repo_owner_iac_datamesh     = "fssou"
-  gh_repo_name_iac_datamesh      = "iac-aws-datamesh"
+  gh_repo_id_iac_datamesh_glue_job        = 705420472
+  gh_repo_owner_iac_datamesh_glue_job     = "fssou"
+  gh_repo_name_iac_datamesh_glue_job      = "iac-aws-datamesh-glue-job"
 }
 
-resource "aws_iam_role" "iac_datamesh" {
+resource "aws_iam_role" "iac_datamesh_glue_job" {
   path                  = "/github/"
-  name                  = "repo-${local.gh_repo_id_iac_datamesh}"
-  description           = "Papel para criacao de recursos do repositorio ${local.gh_repo_owner_iac_datamesh}/${local.gh_repo_name_iac_datamesh}"
+  name                  = "repo-${local.gh_repo_id_iac_datamesh_glue_job}"
+  description           = "Papel para criacao de recursos do repositorio ${local.gh_repo_owner_iac_datamesh_glue_job}/${local.gh_repo_name_iac_datamesh_glue_job}"
   force_detach_policies = true
   max_session_duration  = 3600
-  assume_role_policy    = module.policy_document_iac_datamesh.assume_role_policy.json
+  assume_role_policy    = module.policy_document_iac_datamesh_glue_job.assume_role_policy.json
 }
 
-resource "aws_iam_role_policy_attachment" "iac_datamesh_bucket_state" {
+resource "aws_iam_role_policy_attachment" "iac_datamesh_glue_job" {
   role       = aws_iam_role.iac_datamesh.name
   policy_arn = aws_iam_policy.iac_state_bucket.arn
 }
 
-resource "aws_iam_role_policy_attachment" "iac_datamesh" {
-  role       = aws_iam_role.iac_datamesh.name
-  policy_arn = aws_iam_policy.iac_datamesh.arn
+resource "aws_iam_role_policy_attachment" "iac_datamesh_glue_job" {
+  role       = aws_iam_role.iac_datamesh_glue_job.name
+  policy_arn = aws_iam_policy.iac_datamesh_glue_job.arn
 }
 
-module "policy_document_iac_datamesh" {
+module "policy_document_iac_datamesh_glue_job" {
   source        = "./modules/iam_commons"
-  gh_repo_id    = local.gh_repo_id_iac_datamesh
-  gh_repo_owner = local.gh_repo_owner_iac_datamesh
-  gh_repo_name  = local.gh_repo_name_iac_datamesh
+  gh_repo_id    = local.gh_repo_id_iac_datamesh_glue_job
+  gh_repo_owner = local.gh_repo_owner_iac_datamesh_glue_job
+  gh_repo_name  = local.gh_repo_name_iac_datamesh_glue_job
 }
 
-resource "aws_iam_policy" "iac_datamesh" {
+resource "aws_iam_policy" "iac_datamesh_glue_job" {
   path        = "/github/"
-  name        = "repo-${local.gh_repo_id_iac_datamesh}"
-  description = "Politicas para criacao de recursos do repositorio ${local.gh_repo_owner_iac_datamesh}/${local.gh_repo_name_iac_datamesh}"
-  policy      = data.aws_iam_policy_document.iac_datamesh.json
+  name        = "repo-${local.gh_repo_id_iac_datamesh_glue_job}"
+  description = "Politicas para criacao de recursos do repositorio ${local.gh_repo_owner_iac_datamesh_glue_job}/${local.gh_repo_name_iac_datamesh_glue_job}"
+  policy      = data.aws_iam_policy_document.iac_datamesh_glue_job.json
 }
 
-data "aws_iam_policy_document" "iac_datamesh" {
+data "aws_iam_policy_document" "iac_datamesh_glue_job" {
   version   = "2012-10-17"
-  policy_id = "repo-${local.gh_repo_id_iac_datamesh}"
+  policy_id = "repo-${local.gh_repo_id_iac_datamesh_glue_job}"
   statement {
-    sid = "GlueIacDatamesh"
+    sid = "GlueIacDatameshGlueJobSecurityGroup"
+    actions = [
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:CreateSecurityGroup",
+      "ec2:DeleteSecurityGroup",
+      "ec2:DescribeSecurityGroups",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:RevokeSecurityGroupIngress",
+    ]
+    effect = "Allow"
+    resources = [ 
+      "*"
+     ]
+  }
+  statement {
+    sid = "GlueIacDatameshGlueJob"
     actions = [
       "glue:*"
     ]
@@ -52,7 +68,17 @@ data "aws_iam_policy_document" "iac_datamesh" {
     ]
   }
   statement {
-    sid = "S3IacDatamesh"
+    sid = "S3IacDatameshGlueJob"
+    actions = [
+      "s3:*",
+    ]
+    effect = "Allow"
+    resources = [
+      "arn:aws:s3:::aws-glue-assets.data.francl.in/${local.gh_repo_name_iac_datamesh_glue_job}/*",
+    ]
+  }
+  statement {
+    sid = "S3IacDatameshGlueJob"
     actions = [
       "s3:CreateBucket",
       "s3:DeleteBucket",
@@ -77,7 +103,7 @@ data "aws_iam_policy_document" "iac_datamesh" {
     ]
   }
   statement {
-    sid = "S3IacDatameshRead"
+    sid = "S3IacDatameshGlueJobRead"
     actions = [
       "s3:GetAccelerateConfiguration",
       "s3:GetAccessPoint",
