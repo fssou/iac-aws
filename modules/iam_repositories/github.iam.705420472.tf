@@ -14,7 +14,7 @@ resource "aws_iam_role" "iac_datamesh_glue_job" {
   assume_role_policy    = module.policy_document_iac_datamesh_glue_job.assume_role_policy.json
 }
 
-resource "aws_iam_role_policy_attachment" "iac_datamesh_glue_job" {
+resource "aws_iam_role_policy_attachment" "iac_datamesh_glue_job_state_bucket" {
   role       = aws_iam_role.iac_datamesh.name
   policy_arn = aws_iam_policy.iac_state_bucket.arn
 }
