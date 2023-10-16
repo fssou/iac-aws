@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "iac_datamesh_glue_job" {
     ]
   }
   statement {
-    sid = "S3IacDatameshGlueJob"
+    sid = "S3IacDatameshGlueJobAssets"
     actions = [
       "s3:*",
     ]
