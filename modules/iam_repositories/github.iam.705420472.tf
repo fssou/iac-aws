@@ -54,6 +54,7 @@ data "aws_iam_policy_document" "iac_datamesh_glue_job" {
       "ec2:RevokeSecurityGroupIngress",
       "ec2:DescribeVpcs",
       "ec2:DescribeSubnets",
+      "ec2:DescribeVpcAttribute",
     ]
     effect = "Allow"
     resources = [ 
