@@ -59,7 +59,8 @@ data "aws_iam_policy_document" "iac_datamesh_glue_job" {
     ]
     effect = "Allow"
     resources = [
-      "arn:aws:iam::${data.aws_caller_identity.main.account_id}:role/iamsr/*"
+      "arn:aws:iam::${data.aws_caller_identity.main.account_id}:role/iamsr/*",
+      "arn:aws:iam::${data.aws_caller_identity.main.account_id}:policy/iamsr/*"
     ]
   }
   statement {
