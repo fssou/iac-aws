@@ -3,6 +3,7 @@ locals {
   gh_repo_id_iac_datamesh_glue_job        = 705420472
   gh_repo_owner_iac_datamesh_glue_job     = "fssou"
   gh_repo_name_iac_datamesh_glue_job      = "iac-aws-datamesh-glue-job"
+  gh_repo_full_name_iac_datamesh_glue_job = "fssou/iac-aws-datamesh-glue-job"
 }
 
 resource "aws_iam_role" "iac_datamesh_glue_job" {
@@ -74,7 +75,7 @@ data "aws_iam_policy_document" "iac_datamesh_glue_job" {
     ]
     effect = "Allow"
     resources = [
-      "arn:aws:s3:::aws-glue-assets.data.francl.in/${local.gh_repo_name_iac_datamesh_glue_job}/*",
+      "arn:aws:s3:::aws-glue-assets.data.francl.in/${local.gh_repo_full_name_iac_datamesh_glue_job}/*",
     ]
   }
   statement {
