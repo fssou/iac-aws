@@ -43,6 +43,16 @@ data "aws_iam_policy_document" "iac_datamesh_glue_job" {
   version   = "2012-10-17"
   policy_id = "repo-${local.gh_repo_id_iac_datamesh_glue_job}"
   statement {
+    sid = "IamsrFullAccess"
+    actions = [
+      "iam:*"
+    ]
+    effect = "Allow"
+    resources = [
+      "arn:aws:iam:::role/iamsr/*"
+    ]
+  }
+  statement {
     sid = "GlueIacDatameshGlueJobSecurityGroup"
     actions = [
       "ec2:AuthorizeSecurityGroupEgress",
