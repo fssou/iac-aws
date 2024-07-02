@@ -5,7 +5,7 @@ resource "aws_subnet" "public" {
   vpc_id = data.aws_vpc.default.id
   ipv6_cidr_block = "2600:1f18:7b3f:4210::/64"
   cidr_block = "172.31.128.0/20"
-  availability_zone_id = data.aws_region.current.id
+  availability_zone = data.aws_region.current.name
   tags = {
     Name = "public-subnet"
   }
@@ -25,7 +25,7 @@ resource "aws_route_table" "public_route_table" {
     gateway_id = aws_internet_gateway.igw.id
   }
   route {
-    cidr_block = "::/0"
+    ipv6_cidr_block = "::/0"
     egress_only_gateway_id = aws_egress_only_internet_gateway.eigw.id
   }
   tags = {
@@ -75,7 +75,7 @@ resource "aws_route_table" "private_route_table" {
     nat_gateway_id = aws_nat_gateway.nat.id
   }
   route {
-    cidr_block = "::/0"
+    ipv6_cidr_block = "::/0"
     egress_only_gateway_id = aws_egress_only_internet_gateway.eigw.id
   }
   tags = {
