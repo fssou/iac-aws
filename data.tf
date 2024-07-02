@@ -16,6 +16,12 @@ data "aws_availability_zone" "current" {
     name   = "region-name"
     values = [data.aws_region.current.name]
   }
+  filter {
+    name   = "zone-name"
+    values = [
+      "${data.aws_region.current.name}a",
+    ]
+  }
 }
 
 data "aws_availability_zones" "current" {
