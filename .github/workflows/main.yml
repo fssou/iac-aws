@@ -41,9 +41,9 @@ jobs:
           terraform_wrapper: false
       - name: Terraform Configure
         run: |
-          echo 'bucket_name_state="${{ env.TF_STATE_BUCKET_NAME }}"' >> generated.auto.tfvars
           echo 'gh_repo_id="${{ github.repository_id }}"' >> generated.auto.tfvars
           echo 'gh_repo_name="${{ github.repository }}"' >> generated.auto.tfvars
+          echo 'region="${{ env.AWS_REGION }}"' >> generated.auto.tfvars
       - name: Terraform Initialize
         run: > 
           terraform init
