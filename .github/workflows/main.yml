@@ -1,5 +1,5 @@
 
-name: Terraform Deployment
+name: Deployment
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
   AWS_REGION: ${{ secrets.AWS_REGION }}
-  AWS_ROLE_SESSION_NAME: GitHubActions
+  AWS_ROLE_SESSION_NAME: github-actions-${{ github.run_id }}
   TF_STATE_BUCKET_NAME: ${{ secrets.TF_STATE_BUCKET_NAME }}
 
 jobs:

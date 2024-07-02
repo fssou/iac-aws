@@ -1,8 +1,13 @@
+# variables.tf
 
 variable "gh_repo_id" {
   type = string
 }
 
-variable "bucket_name_state" {
+variable "gh_repo_name" {
+  type = string
+}
+
+variable "region" {
   type = string
 }
