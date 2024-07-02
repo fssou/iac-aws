@@ -5,7 +5,7 @@ resource "aws_subnet" "public" {
   vpc_id = data.aws_vpc.default.id
   ipv6_cidr_block = "2600:1f18:7b3f:4210::/64"
   cidr_block = "172.31.128.0/20"
-  availability_zone = data.aws_region.current.name
+  availability_zone = "${data.aws_region.current.name}a"
   tags = {
     Name = "public-subnet"
   }
