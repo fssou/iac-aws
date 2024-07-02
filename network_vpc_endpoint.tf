@@ -9,10 +9,8 @@ resource "aws_vpc_endpoint" "s3" {
     data.aws_security_group.default.id,
   ]
   subnet_ids = concat(
-    [aws_subnet.public.id],
     [aws_subnet.private_a.id],
     [aws_subnet.private_b.id],
     [aws_subnet.private_c.id],
-    data.aws_subnets.default.ids,
   )
 }
